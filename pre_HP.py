@@ -9,14 +9,14 @@ import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pre_HP
-import Handshake_function_v1
+# import Handshake_function_v1
 import inspect
 import yaml
 from pathlib import Path
 import pickle
 
 
-def configpath(config_path='/Users/aarushivardhan/Documents/connectome/msc_av/config.yaml'): 
+def configpath(config_path='/Users/abdulselamadill/Desktop/BipartiteConnections/config_abdulselam.yaml'): 
     """
     Load the config.yaml file and return a dictionary.
 

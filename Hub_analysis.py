@@ -9,7 +9,7 @@ import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pre_HP
-import Handshake_function_v1
+# import Handshake_function_v1
 import reliability_filter
 import inspect
 import yaml
@@ -873,9 +873,9 @@ def parent_hub_df(merged_partner_df, all_celltypes_list_greater_or_eq_10, data_t
 
     # Matrix processing 
     hub_in_heatmap = hub_in_df.pivot(
-    index='parent',
-    columns='partner_cell',
-    values='pcnt_input_to_parent'
+        index='parent',
+        columns='partner_cell',
+        values='pcnt_input_to_parent'
     ).fillna(0)
 
     hub_out_heatmap = hub_out_df.pivot(
@@ -899,7 +899,9 @@ def parent_hub_df(merged_partner_df, all_celltypes_list_greater_or_eq_10, data_t
     hub_in_full = hub_in_full + 1e-9
     hub_out_full = hub_out_full + 1e-9
 
-    return hub_in_full,  hub_out_full
+    return hub_in_df, hub_out_df, hub_in_full,  hub_out_full
+
+
 def parent_hub_plot_scatter(merged_partner_df, all_celltypes_list_greater_or_eq_10, data_type):
     # Query
     hub_neurons = merged_partner_df[merged_partner_df['color_masked'].notna()]['partner_cell'].to_list()

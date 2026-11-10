@@ -1,0 +1,10 @@
+/male-cnsv0.9
+/optic-lobev1.01
+config_abdulselam.yaml
+.env
+/__pycache__
+/.venv
+known_types.xlsx
+T4a_median_frac_plot.svg
+T4a_three_parameter_plot.svg
+partner_reliability_fig2d.svg

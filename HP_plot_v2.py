@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pre_HP
-import Handshake_function_v1
+# import Handshake_function_v1
 
 def compute_coordinates(parent_list, direction_parent):
     """

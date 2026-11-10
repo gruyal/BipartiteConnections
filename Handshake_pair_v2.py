@@ -453,7 +453,7 @@ def bipartite_strength_df(all_celltypes_list_greater_or_eq_10, cut_bipartite_par
 
     ########### ########### Hub Edges (hub-focals) ########### ########### 
     merged_partner_df = Hub_analysis.top_partners_freq_in_and_output_df(all_celltypes_list_greater_or_eq_10, 'Y', 3, 0.8)
-    hub_out_df, hub_in_df, _, _ = Hub_analysis.parent_hub_df(merged_partner_df, all_celltypes_list_greater_or_eq_10, 'reliability')
+    hub_in_df, hub_out_df, _,_= Hub_analysis.parent_hub_df(merged_partner_df, all_celltypes_list_greater_or_eq_10, 'reliability')
     
     # input df: partner --> parent 
     hub_in_df["sender"] = hub_in_df["partner_cell"]
@@ -507,12 +507,14 @@ def bipartite_strength_df(all_celltypes_list_greater_or_eq_10, cut_bipartite_par
     
 
     return reciprocal_edges, strength_edges, hub_edges
-def bipartite_fig_all(hub_neurons, strength_edges, reciprocal_edges, plot_type=None , cut_log_max=None, cut_log_min=None):
-    #keep edges where either sender and receiver is above 10
-    strength_edges = strength_edges[(strength_edges['input_strength'] >= 10) | (strength_edges['output_strength'] >= 10)].copy() 
+def bipartite_fig_all(hub_neurons, strength_edges, reciprocal_edges, plot_type=None , cut_log_max=None, cut_log_min=None, strength_edges_both_below_10_remove=False):
     #remove edges where both sender and receiver below 10 cells in a cell type
-    strength_edges = strength_edges[(strength_edges['num_neurons_sender_ct'] >= 10) & (strength_edges['num_neurons_receiver_ct'] >= 10)] 
-    
+    strength_edges = strength_edges[(strength_edges['num_neurons_sender_ct'] >= 10) & (strength_edges['num_neurons_receiver_ct'] >= 10)]
+
+    if strength_edges_both_below_10_remove:
+        #keep edges where either sender and receiver is above 10
+        strength_edges = strength_edges[(strength_edges['input_strength'] >= 10) | (strength_edges['output_strength'] >= 10)].copy()  
+        
     if plot_type == 'HP_only':
         # remove anything below 10 in strength and all reciprocals 
         strength_edges = strength_edges[(strength_edges['input_strength'] >= 10) & (strength_edges['output_strength'] >= 10)].copy()
@@ -595,7 +597,7 @@ def bipartite_fig_all(hub_neurons, strength_edges, reciprocal_edges, plot_type=N
             y=[0,100],
             mode="lines",
             line=dict(
-                color="white",
+                color="black",
                 dash="dash"
             ),
             name="y=x"
@@ -610,7 +612,6 @@ def bipartite_fig_all(hub_neurons, strength_edges, reciprocal_edges, plot_type=N
             strength_edges["sender"].isin(hub_neurons["hub_neuron"]) |
             strength_edges["receiver"].isin(hub_neurons["hub_neuron"])
         )
-
         fig.add_trace(
             go.Scatter(
                 x=strength_edges.loc[hub_mask, "input_strength"],
@@ -640,7 +641,7 @@ def bipartite_fig_all(hub_neurons, strength_edges, reciprocal_edges, plot_type=N
     fig.update_layout(
         width=1000,
         height=1000,
-        template="plotly_dark",
+        template="plotly_white",
         barmode="overlay",
         grid=None
     )
